@@ -70,7 +70,7 @@ def add_todo():
         }
         todos.append(new_todo)
         todo_entry.delete(0, tk.END)
-        messagebox.showinfo("Success", "Todo added!")
+        messagebox.askokcancel("Success", "Todo added!")
         refresh_todos()
     else:
         messagebox.showwarning("Empty", "Please enter a todo!")
@@ -78,23 +78,16 @@ def add_todo():
 def refresh_todos():
     for widget in todo_display.winfo_children():
         widget.destroy()
-    
     for todo in todos:
         todo_frame = tk.Frame(todo_display, relief=tk.RIDGE, borderwidth=2, padx=10, pady=5)
         todo_frame.pack(fill="x", padx=10, pady=5)
-        
         td_item = tk.Label(todo_frame, text=f'Task: {todo["text"]}', font=("Arial", 12))
         td_item.pack(anchor="w")
-        
         status_text = "Complete" if todo["status"] else "Incomplete"
         td_status = tk.Label(todo_frame, text=f'Status: {status_text}')
         td_status.pack(anchor="w")
-    
     td_total.config(text=f'Number Of Todos: {len(todos)}')
-
-tk.Button(input_frame, text="Add Todo", command=add_todo, width=20).pack(pady=5)
-
-
-tk.Button(main_page, text="Back to Welcome",command=switch_to_welcome, width=20).pack(pady=10)
+tk.Button(input_frame, text="Add Todo", command=add_todo, width=20).pack(pady=2)
+tk.Button(main_page, text="Back to Welcome",command=switch_to_welcome, width=20).pack(pady=4)
 
 root.mainloop()
